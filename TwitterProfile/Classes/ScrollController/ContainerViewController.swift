@@ -155,11 +155,11 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate, UINaviga
         if let scroll = bottomView as? UIScrollView{
             let bottomHeight = max(scroll.contentSize.height, self.view.frame.height - dataSource.minHeaderHeight() - pagerTabHeight - bottomInset)
             return CGSize(width: scroll.contentSize.width,
-                          height: bottomHeight + headerView.frame.height + pagerTabHeight + bottomInset + 135)
+                          height: bottomHeight + headerView.frame.height + pagerTabHeight + bottomInset)
         }else{
             let bottomHeight = self.view.frame.height - dataSource.minHeaderHeight() - pagerTabHeight
             return CGSize(width: bottomView.frame.width,
-                          height: bottomHeight + headerView.frame.height + pagerTabHeight + bottomInset + 135)
+                          height: bottomHeight + headerView.frame.height + pagerTabHeight + bottomInset)
         }
         
     }
@@ -189,9 +189,10 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate, UINaviga
             }
             self.delegate?.tp_scrollView(self.containerScrollView, didUpdate: progress)
         } else {
-            if 135 <= scrollView.contentOffset.y {
-                self.containerScrollView.contentOffset.y = 0
-                (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y = scrollView.contentOffset.y - 135
+            if headerView.frame.size.height <= scrollView.contentOffset.y {
+                self.containerScrollView.contentOffset.y = headerView.frame.size.height
+                let contentOffsetY = scrollView.contentOffset.y - self.containerScrollView.contentOffset.y
+                (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y = contentOffsetY
             } else {
                 self.containerScrollView.contentOffset.y = topHeight + scrollView.contentOffset.y
                 (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y = 0
