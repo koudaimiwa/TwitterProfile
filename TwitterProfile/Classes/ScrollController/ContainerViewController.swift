@@ -174,9 +174,9 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate, UINaviga
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         contentOffsets[currentIndex] = scrollView.contentOffset.y
-        let topHeight:CGFloat = bottomView.frame.minY - dataSource.minHeaderHeight() - 1
+        let topHeight:CGFloat = bottomView.frame.minY - 1
         if scrollView.contentOffset.y < 0 {
-            self.containerScrollView.contentOffset.y = topHeight + scrollView.contentOffset.y
+            self.containerScrollView.contentOffset.y = scrollView.contentOffset.y
             self.panViews.forEach({ (arg0) in
                 let (_, value) = arg0
                 (value as? UIScrollView)?.contentOffset.y = 0
@@ -194,7 +194,7 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate, UINaviga
                 let contentOffsetY = scrollView.contentOffset.y - self.containerScrollView.contentOffset.y
                 (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y = contentOffsetY
             } else {
-                self.containerScrollView.contentOffset.y = topHeight + scrollView.contentOffset.y
+                self.containerScrollView.contentOffset.y = scrollView.contentOffset.y
                 (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y = 0
             }
             self.subContentOffsets[currentIndex] = (self.panViews[currentIndex] as? UIScrollView)?.contentOffset.y
